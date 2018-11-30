@@ -1,33 +1,33 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, TouchableHighlight, Modal, Alert, Button, TextInput } from 'react-native';
-import MovieForm from './movie-form';
+import ChamadaForm from './chamada-form';
 
 export default class AppHeader extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       modalVisible:  false,
-      movie: {
-        title: "",
-        grade: "",
-        year: 0,
-        cover: ""
+      chamada: {
+        tipo: '',
+        local: '',
+        detalhe: '',
+        data: ''
       }
     }
   }
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.movieHeader}>
+        <View style={styles.chamadaHeader}>
           <StatusBar hidden={true}/>
-          <View style={styles.movieHeaderTitle}>
-            <Image style={styles.movieHeaderLogo} source={{uri: this.props.icon}} />
-            <Text style={styles.movieHeaderTitleText}>{this.props.title}</Text>
+          <View style={styles.chamadaHeaderTitle}>
+            <Image style={styles.chamadaHeaderLogo} source={require('./logo.png')} />
+            <Text style={styles.chamadaHeaderTitleText}>{this.props.tipo}</Text>
           </View>
           <View>
             <TouchableHighlight onPress={this._onPressButton.bind(this)} underlayColor="transparent">
-               <View style={styles.movieHeaderButton}>
-                 <Text style={styles.movieHeaderButtonText}>+</Text>
+               <View style={styles.chamadaHeaderButton}>
+                 <Text style={styles.chamadaHeaderButtonText}>+</Text>
                </View>
              </TouchableHighlight>
           </View>
@@ -40,7 +40,7 @@ export default class AppHeader extends React.Component {
             this.setModalVisible(!this.state.modalVisible);
           }}>
           <View style={{margin: 8}}>
-            <MovieForm />
+            <chamadaForm />
             <Button
               title="Fechar formulário"
               color="#ffdb58"
@@ -69,21 +69,21 @@ const styles = StyleSheet.create({
   container: {
     height: 56,
   },
-  movieHeader: {
+  chamadaHeader: {
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#009688',
   },
-  movieHeaderTitle: {
+  chamadaHeaderTitle: {
     paddingLeft: 10,
     paddingRight: 10,
     margin: 0,
     flex: 1,
     flexDirection: 'row'
   },
-  movieHeaderTitleText: {
+  chamadaHeaderTitleText: {
     fontWeight: "500",
     color: "#ffffff",
     fontSize: 20,
@@ -91,16 +91,16 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingLeft: 10
   },
-  movieHeaderLogo: {
+  chamadaHeaderLogo: {
     width: 32,
     height: 32
   },
-  movieHeaderButton: {
+  chamadaHeaderButton: {
     marginRight: 10,
     width: 32,
     height: 32,
   },
-  movieHeaderButtonText: {
+  chamadaHeaderButtonText: {
     fontSize: 30,
     textAlign: 'center',
     lineHeight: 32,
