@@ -1,27 +1,26 @@
 import React from 'react';
-// Importando todos o componentes nativos do React Native
+
 import { StyleSheet, Text, ScrollView, View, ActivityIndicator, Image, StatusBar, TouchableHighlight, Alert } from 'react-native';
-// Importando o componente MovieItem, pois se trata de uma lista de filmes :)
-import MovieItem from './movie-item';
 
 
-export default class MovieList extends React.Component {
+
+export default class ChamadaList extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
-      movies: []
+      chamadas: []
     }
   }
 
 
-  async fetchMovies () {
+  async fetchChamadas () {
     try {
-      let moviesResponse = await fetch('http://192.168.3.104:3000/api/v1/movies');
-      console.log(moviesResponse);
-      let moviesResponseJson = await moviesResponse.json();
-      return moviesResponseJson;
+      let chamadasResponse = await fetch('http://192.168.3.104:3000/api/v1/chamadas');
+      console.log(chamadasResponse);
+      let chamadasResponseJson = await chamadasResponse.json();
+      return chamadasResponseJson;
     }catch (error) {
       console.log(error);
     }
@@ -30,39 +29,23 @@ export default class MovieList extends React.Component {
 
 
   async componentDidMount () {
-    let moviesResponseJson = await this.fetchMovies();
-    console.log(moviesResponseJson);
-    this.setState({movies: moviesResponseJson, isLoading: false});
+    let chamadasResponseJson = await this.fetchChamadas();
+    console.log(chamadasResponseJson);
+    this.setState({chamadas: chamadasResponseJson, isLoading: false});
     return;
   }
 
 
-  renderMovieItem (movie) {
-    return <MovieItem
-            title={movie.title}
-            key={movie.id}
-            id={movie.id}
-            cover={movie.cover}
-            grade={movie.grade}
-            year={movie.year}
-            onFavorite={this.markMovie.bind(this)}
-            isFavorite={movie.favorite} />
+  renderChamadaItem (chamada) {
+    return <chamadaItem
+            tipo={chamada.tipo}
+            key={chamada.id}
+            id={chamada.id}
+            local={chamada.local}
+            detalhe={chamada.detalhe}
+            data={chamada.data}
+             />
   }
-
-
-  markMovie(id) {
-
-    let movie = this.state.movies.find(function(movie) {
-      return movie.id == id;
-    });
-
-    movie.favorite = !movie.favorite;
-
-    this.setState(function(prevState){
-      return prevState;
-    });
-  }
-
 
 
   render() {
@@ -76,8 +59,8 @@ export default class MovieList extends React.Component {
       );
     } else {
       return (
-        <ScrollView style={styles.movieList}>
-          {this.state.movies.map(this.renderMovieItem.bind(this))}
+        <ScrollView style={styles.chamadaList}>
+          {this.state.chamadas.map(this.renderChamadaItem.bind(this))}
         </ScrollView>
       );
     }
@@ -89,7 +72,7 @@ export default class MovieList extends React.Component {
 
 
 const styles = StyleSheet.create({
-  movieList: {
+  chamadaList: {
     margin: 8,
     padding: 0,
     backgroundColor: '#eeeeee',
